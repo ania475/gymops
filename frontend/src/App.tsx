@@ -9,12 +9,12 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
-import GymDashboard from "./pages/dashboard/GymDashboard";
+import GymDashboard from "./pages/dashboard/GymDashboard/GymDashboard";
 import MembersPage from "./pages/dashboard/MembersPage/MembersPage";
-import MemberDashboard from "./pages/dashboard/MemberDashboard";
-import CoachDashboard from "./pages/dashboard/CoachDashboard";
-import RetentionPage from "./pages/dashboard/RetentionPage";
-import NearbyGymsPage from "./pages/dashboard/NearbyGymsPage";
+import MemberDashboard from "./pages/dashboard/MemberDashboard/MemberDashboard";
+import CoachDashboard from "./pages/dashboard/CoachDashboard/CoachDashboard";
+import RetentionPage from "./pages/dashboard/RetentionPage/RetentionPage";
+import NearbyGymsPage from "./pages/dashboard/NearbyGymsPage/NearbyGymsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
