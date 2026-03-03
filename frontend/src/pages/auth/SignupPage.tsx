@@ -7,7 +7,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { GymOpsLogo } from "@/components/ui/GymOpsLogo";
 import { ArrowLeft, Building2, User, Dumbbell, ArrowRight } from "lucide-react";
 import type { UserRole } from "@/types";
-import { cn } from "@/lib/utils";
 
 const roles = [
   {

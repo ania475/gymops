@@ -27,13 +27,6 @@ export function GymOpsLogo({
   className,
   variant = "default",
 }: GymOpsLogoProps) {
-  const iconColor =
-    variant === "white"
-      ? "text-white"
-      : variant === "dark"
-        ? "text-primary"
-        : "text-accent";
-
   const textColor =
     variant === "white"
       ? "text-white"
