@@ -10,7 +10,7 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import GymDashboard from "./pages/dashboard/GymDashboard";
-import MembersPage from "./pages/dashboard/MembersPage";
+import MembersPage from "./pages/dashboard/MembersPage/MembersPage";
 import MemberDashboard from "./pages/dashboard/MemberDashboard";
 import CoachDashboard from "./pages/dashboard/CoachDashboard";
 import RetentionPage from "./pages/dashboard/RetentionPage";
