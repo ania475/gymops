@@ -16,8 +16,8 @@ export function HeroSection() {
         }}
       >
         {/* Gradient Overlay - Navy themed */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/95 via-primary/80 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-transparent to-primary/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/60 to-primary/60" />
       </div>
 
       {/* Content */}
@@ -33,7 +33,7 @@ export function HeroSection() {
 
           {/* Main Headline */}
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 animate-fade-in-up text-white">
-            RUN YOUR <span className="text-gradient-brand">ACADEMY</span>
+            RUN YOUR <span className="text-accent">ACADEMY</span>
             <br />
             LIKE A <span className="text-accent">CHAMPION</span>
           </h1>
@@ -54,9 +54,9 @@ export function HeroSection() {
             style={{ animationDelay: "0.4s" }}
           >
             <Button
-              variant="default"
+              variant="outline"
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground"
+              className="bg-accent outline-primary hover:text-white hover:bg-accent/10 text-primary"
               asChild
             >
               <Link to="/signup">
@@ -67,7 +67,7 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="gap-2 border-white/30 text-white hover:bg-white/10"
+              className="gap-2 border-white/30 text-primary hover:bg-white/10"
             >
               <Play className="w-5 h-5" />
               Watch Demo
