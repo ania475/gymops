@@ -15,6 +15,8 @@ import MemberDashboard from "./pages/dashboard/MemberDashboard/MemberDashboard";
 import CoachDashboard from "./pages/dashboard/CoachDashboard/CoachDashboard";
 import RetentionPage from "./pages/dashboard/RetentionPage/RetentionPage";
 import NearbyGymsPage from "./pages/dashboard/NearbyGymsPage/NearbyGymsPage";
+import LocationPage from "./pages/dashboard/LocationPage/LocationPage";
+import SettingsPage from "./pages/dashboard/SettingsPage/SettingsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,7 +44,8 @@ const App = () => (
               element={<RetentionPage />}
             />
             <Route path="/dashboard/gym/content" element={<GymDashboard />} />
-            <Route path="/dashboard/gym/settings" element={<GymDashboard />} />
+            <Route path="/dashboard/gym/location" element={<LocationPage />} />
+            <Route path="/dashboard/gym/settings" element={<SettingsPage />} />
 
             {/* Member Dashboard Routes */}
             <Route path="/dashboard/member" element={<MemberDashboard />} />
@@ -92,6 +95,10 @@ const App = () => (
             <Route
               path="/dashboard/coach/earnings"
               element={<CoachDashboard />}
+            />
+            <Route
+              path="/dashboard/coach/settings"
+              element={<SettingsPage />}
             />
 
             {/* Platform Admin Routes */}
