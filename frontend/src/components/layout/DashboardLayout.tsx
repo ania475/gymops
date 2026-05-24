@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useThemeLoader } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
 import { GymOpsLogo } from "@/components/ui/GymOpsLogo";
 import { cn } from "@/lib/utils";
@@ -93,6 +94,7 @@ const coachNavItems: NavItem[] = [
   { label: "Bookings", href: "/dashboard/coach/bookings", icon: Users },
   { label: "My Videos", href: "/dashboard/coach/videos", icon: Video },
   { label: "Earnings", href: "/dashboard/coach/earnings", icon: CreditCard },
+  { label: "Settings", href: "/dashboard/coach/settings", icon: Settings },
 ];
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
@@ -100,6 +102,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useThemeLoader(user?.id);
 
   const getNavItems = () => {
     if (user?.role === "gym_manager" || user?.role === "gym_admin") {
@@ -132,7 +135,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-background flex">
       {/* Sidebar - Desktop */}
-      <aside className="hidden lg:flex w-64 flex-col fixed inset-y-0 z-50 bg-sidebar border-r border-sidebar-border">
+      <aside className="hidden lg:flex w-64 flex-col fixed inset-y-0 z-50 bg-sidebar-primary border-r border-sidebar-border">
         {/* Logo */}
         <div className="p-4 border-b border-sidebar-border">
           <Link to="/">
@@ -165,7 +168,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                    ? "bg-accent text-accent-foreground"
                     : hasAccess
                       ? "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                       : "text-sidebar-foreground/40 cursor-not-allowed",
@@ -258,7 +261,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     className={cn(
                       "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                       isActive
-                        ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                        ? "bg-accent text-accent-foreground"
                         : hasAccess
                           ? "text-sidebar-foreground hover:bg-sidebar-accent"
                           : "text-sidebar-foreground/40 cursor-not-allowed",
