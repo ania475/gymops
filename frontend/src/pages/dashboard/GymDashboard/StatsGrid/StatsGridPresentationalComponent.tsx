@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
-import { DASHBOARD_STATS, TREND_ICONS } from "./constants";
+import { DASHBOARD_STATS, TREND_ICONS } from "../constants";
 
-export function StatsGrid() {
+export function StatsGridPresentational() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {DASHBOARD_STATS.map((stat, idx) => {
@@ -29,9 +29,7 @@ export function StatsGrid() {
                 {stat.change}
               </div>
             </div>
-            <p className="text-2xl font-display font-bold mb-1">
-              {stat.value}
-            </p>
+            <p className="text-2xl font-display font-bold mb-1">{stat.value}</p>
             <p className="text-sm text-muted-foreground">{stat.label}</p>
           </div>
         );
