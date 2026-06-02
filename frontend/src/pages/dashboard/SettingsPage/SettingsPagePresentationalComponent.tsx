@@ -1,11 +1,11 @@
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings, Paintbrush, Bell } from "lucide-react";
-import GeneralSettings from "./GeneralSettings";
-import ThemeSettings from "./ThemeSettings";
-import NotificationSettings from "./NotificationSettings";
+import { GeneralSettingsContainer } from "./GeneralSettings/GeneralSettingsContainerComponent";
+import { ThemeSettingsContainer } from "./ThemeSettings/ThemeSettingsContainerComponent";
+import { NotificationSettingsContainer } from "./NotificationSettings/NotificationSettingsContainerComponent";
 
-export default function SettingsPage() {
+export function SettingsPagePresentational() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -34,15 +34,15 @@ export default function SettingsPage() {
           </TabsList>
 
           <TabsContent value="general">
-            <GeneralSettings />
+            <GeneralSettingsContainer />
           </TabsContent>
 
           <TabsContent value="theme">
-            <ThemeSettings />
+            <ThemeSettingsContainer />
           </TabsContent>
 
           <TabsContent value="notifications">
-            <NotificationSettings />
+            <NotificationSettingsContainer />
           </TabsContent>
         </Tabs>
       </div>
