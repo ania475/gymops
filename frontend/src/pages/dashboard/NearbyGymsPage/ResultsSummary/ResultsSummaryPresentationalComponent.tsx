@@ -1,9 +1,9 @@
-type ResultsSummaryProps = {
+type Props = {
   count: number;
   radius: number;
 };
 
-export function ResultsSummary({ count, radius }: ResultsSummaryProps) {
+export function ResultsSummaryPresentational({ count, radius }: Props) {
   return (
     <p className="text-sm text-muted-foreground text-center">
       Showing {count} gym{count !== 1 ? "s" : ""} within {radius} km

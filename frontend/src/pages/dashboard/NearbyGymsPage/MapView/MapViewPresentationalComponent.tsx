@@ -10,9 +10,9 @@ import {
   Star,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { NearbyGym } from "./types";
+import type { NearbyGym } from "../types";
 
-type MapViewProps = {
+type Props = {
   gyms: NearbyGym[];
   selectedGym: NearbyGym | null;
   onSelectGym: (gym: NearbyGym) => void;
@@ -21,14 +21,14 @@ type MapViewProps = {
   isLocating: boolean;
 };
 
-export function MapView({
+export function MapViewPresentational({
   gyms,
   selectedGym,
   onSelectGym,
   savedGymIds,
   onToggleSave,
   isLocating,
-}: MapViewProps) {
+}: Props) {
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       <div className="aspect-[16/9] lg:aspect-[21/9] bg-secondary flex items-center justify-center relative">
@@ -41,9 +41,7 @@ export function MapView({
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
               <MapIcon className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
-              <p className="text-muted-foreground">
-                Interactive map coming soon
-              </p>
+              <p className="text-muted-foreground">Interactive map coming soon</p>
               <p className="text-sm text-muted-foreground/70 mt-1">
                 Switch to List view to see nearby gyms
               </p>
@@ -59,10 +57,7 @@ export function MapView({
               gym.isGymOpsPartner ? "bg-accent" : "bg-muted",
               selectedGym?.id === gym.id && "ring-2 ring-white scale-110",
             )}
-            style={{
-              left: `${20 + idx * 15}%`,
-              top: `${30 + idx * 10}%`,
-            }}
+            style={{ left: `${20 + idx * 15}%`, top: `${30 + idx * 10}%` }}
             onClick={() => onSelectGym(gym)}
           >
             <MapPin className="w-5 h-5 text-white" />
@@ -80,24 +75,14 @@ export function MapView({
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-display font-semibold">
-                      {selectedGym.name}
-                    </h3>
+                    <h3 className="font-display font-semibold">{selectedGym.name}</h3>
                     {selectedGym.isGymOpsPartner && (
-                      <Badge className="bg-accent text-accent-foreground text-xs">
-                        Partner
-                      </Badge>
+                      <Badge className="bg-accent text-accent-foreground text-xs">Partner</Badge>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    {selectedGym.address}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{selectedGym.address}</p>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onToggleSave(selectedGym.id)}
-                >
+                <Button variant="ghost" size="icon" onClick={() => onToggleSave(selectedGym.id)}>
                   <Heart
                     className={cn(
                       "w-5 h-5",
@@ -113,15 +98,11 @@ export function MapView({
                   <Star className="w-4 h-4 fill-warning text-warning" />
                   {selectedGym.rating} ({selectedGym.reviewCount})
                 </span>
-                <span className="text-muted-foreground">
-                  {selectedGym.distance} km away
-                </span>
+                <span className="text-muted-foreground">{selectedGym.distance} km away</span>
                 <span
                   className={cn(
                     "text-xs font-medium",
-                    selectedGym.isOpen
-                      ? "text-success"
-                      : "text-muted-foreground",
+                    selectedGym.isOpen ? "text-success" : "text-muted-foreground",
                   )}
                 >
                   {selectedGym.isOpen ? "Open now" : "Closed"}
@@ -129,27 +110,18 @@ export function MapView({
               </div>
               <div className="flex flex-wrap gap-1 mt-2">
                 {selectedGym.disciplines.map((d) => (
-                  <Badge key={d} variant="outline" className="text-xs">
-                    {d}
-                  </Badge>
+                  <Badge key={d} variant="outline" className="text-xs">{d}</Badge>
                 ))}
               </div>
               <div className="flex gap-2 mt-4">
                 {selectedGym.isGymOpsPartner ? (
-                  <Button
-                    size="sm"
-                    className="bg-highlight hover:bg-highlight/90 text-highlight-foreground"
-                  >
+                  <Button size="sm" className="bg-highlight hover:bg-highlight/90 text-highlight-foreground">
                     Join / Request Info
                   </Button>
                 ) : (
                   selectedGym.website && (
                     <Button size="sm" variant="outline" asChild>
-                      <a
-                        href={selectedGym.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <a href={selectedGym.website} target="_blank" rel="noopener noreferrer">
                         <Globe className="w-4 h-4 mr-2" />
                         Visit Website
                       </a>

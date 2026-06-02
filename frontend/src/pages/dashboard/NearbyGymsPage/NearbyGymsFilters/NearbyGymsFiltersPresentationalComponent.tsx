@@ -9,16 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  CheckCircle2,
-  ChevronDown,
-  Filter,
-  Navigation,
-  Search,
-} from "lucide-react";
-import { DISCIPLINES, RADIUS_OPTIONS } from "./constants";
+import { CheckCircle2, ChevronDown, Filter, Navigation, Search } from "lucide-react";
+import { DISCIPLINES, RADIUS_OPTIONS } from "../constants";
 
-type NearbyGymsFiltersProps = {
+type Props = {
   searchQuery: string;
   onSearchChange: (value: string) => void;
   selectedRadius: number;
@@ -32,7 +26,7 @@ type NearbyGymsFiltersProps = {
   onOpenNowOnlyToggle: () => void;
 };
 
-export function NearbyGymsFilters({
+export function NearbyGymsFiltersPresentational({
   searchQuery,
   onSearchChange,
   selectedRadius,
@@ -44,7 +38,7 @@ export function NearbyGymsFilters({
   onPartnersOnlyToggle,
   openNowOnly,
   onOpenNowOnlyToggle,
-}: NearbyGymsFiltersProps) {
+}: Props) {
   return (
     <div className="flex flex-col lg:flex-row gap-4">
       <div className="relative flex-1">
@@ -68,10 +62,7 @@ export function NearbyGymsFilters({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             {RADIUS_OPTIONS.map((radius) => (
-              <DropdownMenuItem
-                key={radius}
-                onClick={() => onRadiusChange(radius)}
-              >
+              <DropdownMenuItem key={radius} onClick={() => onRadiusChange(radius)}>
                 {radius} km
                 {selectedRadius === radius && (
                   <CheckCircle2 className="w-4 h-4 ml-auto text-accent" />
@@ -87,9 +78,7 @@ export function NearbyGymsFilters({
               <Filter className="w-4 h-4 mr-2" />
               Disciplines
               {selectedDisciplines.length > 0 && (
-                <Badge variant="secondary" className="ml-2">
-                  {selectedDisciplines.length}
-                </Badge>
+                <Badge variant="secondary" className="ml-2">{selectedDisciplines.length}</Badge>
               )}
               <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
@@ -107,9 +96,7 @@ export function NearbyGymsFilters({
             {selectedDisciplines.length > 0 && (
               <>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={onClearDisciplines}>
-                  Clear all
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={onClearDisciplines}>Clear all</DropdownMenuItem>
               </>
             )}
           </DropdownMenuContent>

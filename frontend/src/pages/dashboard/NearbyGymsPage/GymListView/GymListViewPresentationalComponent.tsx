@@ -1,17 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Globe,
-  Heart,
-  MapPin,
-  Navigation,
-  Phone,
-  Star,
-} from "lucide-react";
+import { Globe, Heart, MapPin, Navigation, Phone, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { NearbyGym } from "./types";
+import type { NearbyGym } from "../types";
 
-type GymListViewProps = {
+type Props = {
   gyms: NearbyGym[];
   savedGymIds: string[];
   onToggleSave: (gymId: string) => void;
@@ -31,11 +24,7 @@ function GymCard({
       <div className="flex items-start gap-4">
         <div className="w-20 h-20 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0">
           {gym.logo ? (
-            <img
-              src={gym.logo}
-              alt={gym.name}
-              className="w-full h-full object-cover rounded-lg"
-            />
+            <img src={gym.logo} alt={gym.name} className="w-full h-full object-cover rounded-lg" />
           ) : (
             <MapPin className="w-8 h-8 text-muted-foreground" />
           )}
@@ -44,34 +33,22 @@ function GymCard({
           <div className="flex items-start justify-between gap-2">
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-display text-lg font-semibold">
-                  {gym.name}
-                </h3>
+                <h3 className="font-display text-lg font-semibold">{gym.name}</h3>
                 {gym.isGymOpsPartner && (
-                  <Badge className="bg-accent text-accent-foreground text-xs">
-                    GymOps Partner
-                  </Badge>
+                  <Badge className="bg-accent text-accent-foreground text-xs">GymOps Partner</Badge>
                 )}
                 <span
                   className={cn(
                     "text-xs font-medium px-2 py-0.5 rounded-full",
-                    gym.isOpen
-                      ? "bg-success/20 text-success"
-                      : "bg-muted text-muted-foreground",
+                    gym.isOpen ? "bg-success/20 text-success" : "bg-muted text-muted-foreground",
                   )}
                 >
                   {gym.isOpen ? "Open" : "Closed"}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
-                {gym.address}
-              </p>
+              <p className="text-sm text-muted-foreground mt-1">{gym.address}</p>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onToggleSave(gym.id)}
-            >
+            <Button variant="ghost" size="icon" onClick={() => onToggleSave(gym.id)}>
               <Heart
                 className={cn(
                   "w-5 h-5",
@@ -94,28 +71,19 @@ function GymCard({
 
           <div className="flex flex-wrap gap-1 mt-3">
             {gym.disciplines.map((d) => (
-              <Badge key={d} variant="outline" className="text-xs">
-                {d}
-              </Badge>
+              <Badge key={d} variant="outline" className="text-xs">{d}</Badge>
             ))}
           </div>
 
           <div className="flex gap-2 mt-4">
             {gym.isGymOpsPartner ? (
-              <Button
-                size="sm"
-                className="bg-highlight hover:bg-highlight/90 text-highlight-foreground"
-              >
+              <Button size="sm" className="bg-highlight hover:bg-highlight/90 text-highlight-foreground">
                 Join / Request Info
               </Button>
             ) : (
               gym.website && (
                 <Button size="sm" variant="outline" asChild>
-                  <a
-                    href={gym.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={gym.website} target="_blank" rel="noopener noreferrer">
                     <Globe className="w-4 h-4 mr-2" />
                     Visit Website
                   </a>
@@ -130,9 +98,7 @@ function GymCard({
                 </a>
               </Button>
             )}
-            <Button size="sm" variant="ghost">
-              View Details
-            </Button>
+            <Button size="sm" variant="ghost">View Details</Button>
           </div>
         </div>
       </div>
@@ -140,18 +106,12 @@ function GymCard({
   );
 }
 
-export function GymListView({
-  gyms,
-  savedGymIds,
-  onToggleSave,
-}: GymListViewProps) {
+export function GymListViewPresentational({ gyms, savedGymIds, onToggleSave }: Props) {
   if (gyms.length === 0) {
     return (
       <div className="rounded-xl border border-border bg-card p-12 text-center">
         <MapPin className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
-        <h3 className="font-display text-lg font-semibold mb-2">
-          No gyms found
-        </h3>
+        <h3 className="font-display text-lg font-semibold mb-2">No gyms found</h3>
         <p className="text-muted-foreground text-sm">
           Try adjusting your filters or increasing the search radius.
         </p>
