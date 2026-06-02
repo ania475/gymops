@@ -1,27 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
+import type { ClassItem } from "../types";
 
-type ClassItem = {
-  name: string;
-  time: string;
-  coach: string;
-  day: string;
-};
-
-type UpcomingClassesCardProps = {
+type Props = {
   classes: ClassItem[];
 };
 
-export function UpcomingClassesCard({ classes }: UpcomingClassesCardProps) {
+export function UpcomingClassesCardPresentational({ classes }: Props) {
   return (
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-display text-xl font-semibold">
-          Upcoming Classes
-        </h2>
-        <Button variant="ghost" size="sm">
-          View Schedule
-        </Button>
+        <h2 className="font-display text-xl font-semibold">Upcoming Classes</h2>
+        <Button variant="ghost" size="sm">View Schedule</Button>
       </div>
 
       <div className="space-y-4">
@@ -36,9 +26,7 @@ export function UpcomingClassesCard({ classes }: UpcomingClassesCardProps) {
               </div>
               <div>
                 <p className="font-medium">{classItem.name}</p>
-                <p className="text-sm text-muted-foreground">
-                  with {classItem.coach}
-                </p>
+                <p className="text-sm text-muted-foreground">with {classItem.coach}</p>
               </div>
             </div>
             <div className="text-right">

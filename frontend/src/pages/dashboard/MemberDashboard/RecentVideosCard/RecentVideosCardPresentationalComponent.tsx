@@ -1,26 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Clock } from "lucide-react";
+import type { Video } from "../types";
 
-type Video = {
-  id: string;
-  title: string;
-  category: string;
-  thumbnailUrl?: string;
-  duration?: number;
-};
-
-type RecentVideosCardProps = {
+type Props = {
   videos: Video[];
 };
 
-export function RecentVideosCard({ videos }: RecentVideosCardProps) {
+export function RecentVideosCardPresentational({ videos }: Props) {
   return (
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-display text-xl font-semibold">
-          New Training Videos
-        </h2>
+        <h2 className="font-display text-xl font-semibold">New Training Videos</h2>
         <Button variant="ghost" size="sm" asChild>
           <Link to="/dashboard/member/videos">View Library</Link>
         </Button>
@@ -45,12 +36,8 @@ export function RecentVideosCard({ videos }: RecentVideosCardProps) {
               </div>
             </div>
             <div className="p-4">
-              <p className="font-medium text-sm line-clamp-2">
-                {video.title}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {video.category}
-              </p>
+              <p className="font-medium text-sm line-clamp-2">{video.title}</p>
+              <p className="text-xs text-muted-foreground mt-1">{video.category}</p>
             </div>
           </div>
         ))}
