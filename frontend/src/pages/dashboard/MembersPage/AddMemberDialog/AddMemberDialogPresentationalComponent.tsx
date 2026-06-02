@@ -1,4 +1,4 @@
-import { useState } from "react";
+import type React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,45 +17,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PLAN_OPTIONS } from "./constants";
-import type { NewMemberFormData } from "./types";
+import { PLAN_OPTIONS } from "../constants";
+import type { NewMemberFormData } from "../types";
 
-type AddMemberDialogProps = {
+type Props = {
   open: boolean;
+  form: NewMemberFormData;
+  onFormChange: (form: NewMemberFormData) => void;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: NewMemberFormData) => void;
+  onSubmit: (e: React.FormEvent) => void;
 };
 
-const initialForm: NewMemberFormData = {
-  name: "",
-  email: "",
-  planType: "",
-  planStartDate: "",
-};
-
-export function AddMemberDialog({
+export function AddMemberDialogPresentational({
   open,
+  form,
+  onFormChange,
   onOpenChange,
   onSubmit,
-}: AddMemberDialogProps) {
-  const [form, setForm] = useState<NewMemberFormData>(initialForm);
-
-  const handleOpenChange = (next: boolean) => {
-    onOpenChange(next);
-    if (!next) setForm(initialForm);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name || !form.email || !form.planType || !form.planStartDate)
-      return;
-    onSubmit(form);
-    onOpenChange(false);
-    setForm(initialForm);
-  };
-
+}: Props) {
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add Member</DialogTitle>
@@ -63,14 +44,16 @@ export function AddMemberDialog({
             Add a new member to your academy. Fill in the details below.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="add-member-name">Name</Label>
             <Input
               id="add-member-name"
               placeholder="e.g. John Smith"
               value={form.name}
-              onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+              onChange={(e) =>
+                onFormChange({ ...form, name: e.target.value })
+              }
               required
             />
           </div>
@@ -81,7 +64,9 @@ export function AddMemberDialog({
               type="email"
               placeholder="e.g. john@email.com"
               value={form.email}
-              onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+              onChange={(e) =>
+                onFormChange({ ...form, email: e.target.value })
+              }
               required
             />
           </div>
@@ -90,7 +75,7 @@ export function AddMemberDialog({
             <Select
               value={form.planType}
               onValueChange={(value) =>
-                setForm((prev) => ({ ...prev, planType: value }))
+                onFormChange({ ...form, planType: value })
               }
             >
               <SelectTrigger id="add-member-plan">
@@ -112,7 +97,7 @@ export function AddMemberDialog({
               type="date"
               value={form.planStartDate}
               onChange={(e) =>
-                setForm((prev) => ({ ...prev, planStartDate: e.target.value }))
+                onFormChange({ ...form, planStartDate: e.target.value })
               }
               required
             />
