@@ -1,22 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { STATUS_OPTIONS } from "./constants";
 
-type MembersFiltersProps = {
+type Props = {
   searchQuery: string;
   onSearchChange: (value: string) => void;
   statusFilter: string;
   onStatusFilterChange: (status: string) => void;
 };
 
-const STATUS_OPTIONS = ["all", "active", "pending", "expired"] as const;
-
-export function MembersFilters({
+export function MembersFiltersPresentational({
   searchQuery,
   onSearchChange,
   statusFilter,
   onStatusFilterChange,
-}: MembersFiltersProps) {
+}: Props) {
   return (
     <div className="flex flex-col sm:flex-row gap-4">
       <div className="relative flex-1">

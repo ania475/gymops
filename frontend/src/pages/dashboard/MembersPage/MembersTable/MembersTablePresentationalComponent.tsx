@@ -16,14 +16,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { CreditCard, Mail, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { STATUS_COLORS } from "./constants";
-import type { MemberWithProfile } from "./types";
+import { STATUS_COLORS } from "../constants";
+import type { MemberWithProfile } from "../types";
 
-type MembersTableProps = {
+type Props = {
   members: MemberWithProfile[];
 };
 
-export function MembersTable({ members }: MembersTableProps) {
+export function MembersTablePresentational({ members }: Props) {
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       <Table>

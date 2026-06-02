@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-type MembersPageHeaderProps = {
+type Props = {
   onAddMember: () => void;
 };
 
-export function MembersPageHeader({ onAddMember }: MembersPageHeaderProps) {
+export function MembersPageHeaderPresentational({ onAddMember }: Props) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
