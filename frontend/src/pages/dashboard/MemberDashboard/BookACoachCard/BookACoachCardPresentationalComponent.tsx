@@ -1,25 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Dumbbell } from "lucide-react";
+import type { Coach } from "../types";
 
-type Coach = {
-  id: string;
-  name: string;
-  avatarUrl?: string | null;
-  coachProfile: { specialties: string[]; sessionPrice?: number };
-};
-
-type BookACoachCardProps = {
+type Props = {
   coaches: Coach[];
 };
 
-export function BookACoachCard({ coaches }: BookACoachCardProps) {
+export function BookACoachCardPresentational({ coaches }: Props) {
   return (
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-display text-xl font-semibold">
-          Book a Coach
-        </h2>
+        <h2 className="font-display text-xl font-semibold">Book a Coach</h2>
         <Button variant="ghost" size="sm" asChild>
           <Link to="/dashboard/member/coaches">View All</Link>
         </Button>
@@ -34,11 +26,7 @@ export function BookACoachCard({ coaches }: BookACoachCardProps) {
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-secondary overflow-hidden">
                 {coach.avatarUrl ? (
-                  <img
-                    src={coach.avatarUrl}
-                    alt={coach.name}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={coach.avatarUrl} alt={coach.name} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <Dumbbell className="w-6 h-6 text-muted-foreground" />
