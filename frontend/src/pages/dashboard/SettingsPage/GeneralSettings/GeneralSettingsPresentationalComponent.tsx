@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,42 +16,45 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Building2, CreditCard, User, AlertTriangle } from "lucide-react";
-import { toast } from "sonner";
+import { PLAN_LABELS } from "../constants";
 
-const PLAN_LABELS: Record<string, { label: string; color: string }> = {
-  starter: { label: "Starter", color: "bg-muted text-muted-foreground" },
-  growth: {
-    label: "Growth",
-    color: "bg-highlight/20 text-highlight",
-  },
-  pro: { label: "Pro", color: "bg-accent/20 text-accent" },
+type GymForm = {
+  name: string;
+  email: string;
+  phone: string;
+  website: string;
 };
 
-export default function GeneralSettings() {
-  const { gym, user, updateGym } = useAuth();
+type ProfileForm = {
+  name: string;
+  email: string;
+};
 
-  const [gymForm, setGymForm] = useState({
-    name: gym?.name ?? "",
-    email: gym?.email ?? "",
-    phone: gym?.phone ?? "",
-    website: gym?.website ?? "",
-  });
+type Props = {
+  gymForm: GymForm;
+  profileForm: ProfileForm;
+  planKey: string;
+  userRole: string;
+  onGymFormChange: (form: GymForm) => void;
+  onProfileFormChange: (form: ProfileForm) => void;
+  onGymSave: () => void;
+  onProfileSave: () => void;
+};
 
-  const [profileForm, setProfileForm] = useState({
-    name: user?.name ?? "",
-    email: user?.email ?? "",
-  });
-
-  function handleGymSave() {
-    updateGym(gymForm);
-    toast.success("Gym information saved");
-  }
-
-  const planInfo = PLAN_LABELS[gym?.plan ?? "starter"];
+export function GeneralSettingsPresentational({
+  gymForm,
+  profileForm,
+  planKey,
+  userRole,
+  onGymFormChange,
+  onProfileFormChange,
+  onGymSave,
+  onProfileSave,
+}: Props) {
+  const planInfo = PLAN_LABELS[planKey] ?? PLAN_LABELS.starter;
 
   return (
     <div className="space-y-6">
-      {/* Gym Information */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -72,7 +73,7 @@ export default function GeneralSettings() {
                 id="gym-name"
                 value={gymForm.name}
                 onChange={(e) =>
-                  setGymForm((p) => ({ ...p, name: e.target.value }))
+                  onGymFormChange({ ...gymForm, name: e.target.value })
                 }
               />
             </div>
@@ -83,7 +84,7 @@ export default function GeneralSettings() {
                 type="email"
                 value={gymForm.email}
                 onChange={(e) =>
-                  setGymForm((p) => ({ ...p, email: e.target.value }))
+                  onGymFormChange({ ...gymForm, email: e.target.value })
                 }
               />
             </div>
@@ -93,7 +94,7 @@ export default function GeneralSettings() {
                 id="gym-phone"
                 value={gymForm.phone}
                 onChange={(e) =>
-                  setGymForm((p) => ({ ...p, phone: e.target.value }))
+                  onGymFormChange({ ...gymForm, phone: e.target.value })
                 }
               />
             </div>
@@ -103,18 +104,17 @@ export default function GeneralSettings() {
                 id="gym-website"
                 value={gymForm.website}
                 onChange={(e) =>
-                  setGymForm((p) => ({ ...p, website: e.target.value }))
+                  onGymFormChange({ ...gymForm, website: e.target.value })
                 }
               />
             </div>
           </div>
           <div className="flex justify-end pt-2">
-            <Button onClick={handleGymSave}>Save Changes</Button>
+            <Button onClick={onGymSave}>Save Changes</Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* Subscription Plan */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -139,15 +139,15 @@ export default function GeneralSettings() {
                 </span>
               </div>
               <p className="text-sm text-muted-foreground">
-                {gym?.plan === "starter" &&
+                {planKey === "starter" &&
                   "Up to 100 members · 2 staff · Core features"}
-                {gym?.plan === "growth" &&
+                {planKey === "growth" &&
                   "Up to 500 members · 5 staff · Retention & KPI tools"}
-                {gym?.plan === "pro" &&
+                {planKey === "pro" &&
                   "Unlimited members · 20 staff · All features"}
               </p>
             </div>
-            {gym?.plan !== "pro" && (
+            {planKey !== "pro" && (
               <Button variant="outline" size="sm">
                 Upgrade Plan
               </Button>
@@ -156,7 +156,6 @@ export default function GeneralSettings() {
         </CardContent>
       </Card>
 
-      {/* Account Profile */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -173,7 +172,7 @@ export default function GeneralSettings() {
                 id="profile-name"
                 value={profileForm.name}
                 onChange={(e) =>
-                  setProfileForm((p) => ({ ...p, name: e.target.value }))
+                  onProfileFormChange({ ...profileForm, name: e.target.value })
                 }
               />
             </div>
@@ -184,7 +183,10 @@ export default function GeneralSettings() {
                 type="email"
                 value={profileForm.email}
                 onChange={(e) =>
-                  setProfileForm((p) => ({ ...p, email: e.target.value }))
+                  onProfileFormChange({
+                    ...profileForm,
+                    email: e.target.value,
+                  })
                 }
               />
             </div>
@@ -193,21 +195,16 @@ export default function GeneralSettings() {
             <Label>Role</Label>
             <div>
               <Badge variant="secondary" className="capitalize">
-                {user?.role?.replace("_", " ")}
+                {userRole.replace("_", " ")}
               </Badge>
             </div>
           </div>
           <div className="flex justify-end pt-2">
-            <Button
-              onClick={() => toast.success("Profile updated")}
-            >
-              Save Profile
-            </Button>
+            <Button onClick={onProfileSave}>Save Profile</Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* Danger Zone */}
       <Card className="border-destructive/30">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-destructive">

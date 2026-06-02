@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -11,94 +9,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Paintbrush, RotateCcw } from "lucide-react";
-import { toast } from "sonner";
-import {
-  type ThemeConfig,
-  getDefaultHex,
-  loadSavedTheme,
-  saveTheme,
-  resetSavedTheme,
-  applyTheme,
-} from "@/hooks/useTheme";
+import type { ThemeConfig } from "@/hooks/useTheme";
+import { THEME_CONTROLS } from "../constants";
 
-interface ColorControl {
-  key: keyof ThemeConfig;
-  label: string;
-  description: string;
-}
+type Props = {
+  colors: ThemeConfig;
+  onColorChange: (key: keyof ThemeConfig, hex: string) => void;
+  onSave: () => void;
+  onReset: () => void;
+};
 
-const CONTROLS: ColorControl[] = [
-  {
-    key: "background",
-    label: "Page Background",
-    description: "Main content area background color",
-  },
-  {
-    key: "foreground",
-    label: "Text Color",
-    description: "Primary text throughout the dashboard",
-  },
-  {
-    key: "card",
-    label: "Card Background",
-    description: "Background of data cards and panels",
-  },
-  {
-    key: "sidebarPrimary",
-    label: "Sidebar Color",
-    description: "Navigation sidebar background",
-  },
-  {
-    key: "primary",
-    label: "Brand / Primary",
-    description: "Buttons and key interactive elements",
-  },
-  {
-    key: "accent",
-    label: "Accent Color",
-    description: "Highlights, badges, and active states",
-  },
-];
-
-export default function ThemeSettings() {
-  const { user, updateGym } = useAuth();
-  const defaults = getDefaultHex();
-
-  const [colors, setColors] = useState<ThemeConfig>(() => {
-    if (!user?.id) return defaults;
-    const saved = loadSavedTheme(user.id);
-    return { ...defaults, ...(saved ?? {}) };
-  });
-
-  // Re-load when user changes
-  useEffect(() => {
-    if (!user?.id) return;
-    const saved = loadSavedTheme(user.id);
-    setColors({ ...defaults, ...(saved ?? {}) });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
-
-  function handleColorChange(key: keyof ThemeConfig, hex: string) {
-    const updated = { ...colors, [key]: hex };
-    setColors(updated);
-    // Apply live preview instantly
-    applyTheme({ [key]: hex });
-  }
-
-  function handleSave() {
-    if (!user?.id) return;
-    saveTheme(user.id, colors);
-    updateGym({ primaryColor: colors.primary, secondaryColor: colors.accent });
-    toast.success("Theme saved — your colours are applied!");
-  }
-
-  function handleReset() {
-    if (!user?.id) return;
-    resetSavedTheme(user.id);
-    setColors(defaults);
-    toast.success("Theme reset to defaults");
-  }
-
+export function ThemeSettingsPresentational({
+  colors,
+  onColorChange,
+  onSave,
+  onReset,
+}: Props) {
   return (
     <div className="space-y-6">
       <Card>
@@ -114,14 +40,16 @@ export default function ThemeSettings() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {CONTROLS.map(({ key, label, description }) => (
+            {THEME_CONTROLS.map(({ key, label, description }) => (
               <div key={key} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div>
                     <Label htmlFor={`color-${key}`} className="font-medium">
                       {label}
                     </Label>
-                    <p className="text-xs text-muted-foreground">{description}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {description}
+                    </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <div
@@ -132,33 +60,38 @@ export default function ThemeSettings() {
                       id={`color-${key}`}
                       type="color"
                       value={colors[key]}
-                      onChange={(e) => handleColorChange(key, e.target.value)}
+                      onChange={(e) => onColorChange(key, e.target.value)}
                       className="w-8 h-8 rounded cursor-pointer border-0 p-0 bg-transparent"
                       style={{ appearance: "none" }}
                     />
                   </div>
                 </div>
-                <div className="h-2 rounded-full" style={{ backgroundColor: colors[key], border: "1px solid hsl(var(--border))" }} />
+                <div
+                  className="h-2 rounded-full"
+                  style={{
+                    backgroundColor: colors[key],
+                    border: "1px solid hsl(var(--border))",
+                  }}
+                />
               </div>
             ))}
           </div>
 
           <Separator />
 
-          {/* Live Preview Strip */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Preview</Label>
             <div
               className="rounded-lg p-4 space-y-2 border"
-              style={{ backgroundColor: colors.background, borderColor: "hsl(var(--border))" }}
+              style={{
+                backgroundColor: colors.background,
+                borderColor: "hsl(var(--border))",
+              }}
             >
               <div className="flex items-center gap-3">
                 <div
                   className="w-32 h-16 rounded-md flex items-center justify-center text-xs font-medium"
-                  style={{
-                    backgroundColor: colors.sidebarPrimary,
-                    color: "#ffffff",
-                  }}
+                  style={{ backgroundColor: colors.sidebarPrimary, color: "#ffffff" }}
                 >
                   Sidebar
                 </div>
@@ -171,24 +104,21 @@ export default function ThemeSettings() {
                       border: "1px solid hsl(var(--border))",
                     }}
                   >
-                    Card background · <span style={{ color: colors.foreground }}>Text colour</span>
+                    Card background ·{" "}
+                    <span style={{ color: colors.foreground }}>
+                      Text colour
+                    </span>
                   </div>
                   <div className="flex gap-2">
                     <div
                       className="rounded px-3 py-1 text-xs font-medium"
-                      style={{
-                        backgroundColor: colors.primary,
-                        color: "#ffffff",
-                      }}
+                      style={{ backgroundColor: colors.primary, color: "#ffffff" }}
                     >
                       Primary Button
                     </div>
                     <div
                       className="rounded px-3 py-1 text-xs font-medium"
-                      style={{
-                        backgroundColor: colors.accent,
-                        color: "#ffffff",
-                      }}
+                      style={{ backgroundColor: colors.accent, color: "#ffffff" }}
                     >
                       Accent Badge
                     </div>
@@ -199,11 +129,11 @@ export default function ThemeSettings() {
           </div>
 
           <div className="flex items-center justify-between pt-2">
-            <Button variant="outline" onClick={handleReset} className="gap-2">
+            <Button variant="outline" onClick={onReset} className="gap-2">
               <RotateCcw className="w-4 h-4" />
               Reset to Defaults
             </Button>
-            <Button onClick={handleSave}>Save Theme</Button>
+            <Button onClick={onSave}>Save Theme</Button>
           </div>
         </CardContent>
       </Card>
