@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-type ActiveFiltersBarProps = {
+type Props = {
   selectedDisciplines: string[];
   onRemoveDiscipline: (d: string) => void;
   partnersOnly: boolean;
@@ -12,7 +12,7 @@ type ActiveFiltersBarProps = {
   onClearAll: () => void;
 };
 
-export function ActiveFiltersBar({
+export function ActiveFiltersBarPresentational({
   selectedDisciplines,
   onRemoveDiscipline,
   partnersOnly,
@@ -20,9 +20,8 @@ export function ActiveFiltersBar({
   openNowOnly,
   onClearOpenNowOnly,
   onClearAll,
-}: ActiveFiltersBarProps) {
-  const hasFilters =
-    selectedDisciplines.length > 0 || partnersOnly || openNowOnly;
+}: Props) {
+  const hasFilters = selectedDisciplines.length > 0 || partnersOnly || openNowOnly;
 
   if (!hasFilters) return null;
 
@@ -32,10 +31,7 @@ export function ActiveFiltersBar({
       {selectedDisciplines.map((d) => (
         <Badge key={d} variant="secondary" className="gap-1">
           {d}
-          <X
-            className="w-3 h-3 cursor-pointer"
-            onClick={() => onRemoveDiscipline(d)}
-          />
+          <X className="w-3 h-3 cursor-pointer" onClick={() => onRemoveDiscipline(d)} />
         </Badge>
       ))}
       {partnersOnly && (

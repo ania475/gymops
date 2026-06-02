@@ -1,15 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 
-type LocationErrorBannerProps = {
+type Props = {
   message: string;
   onRetry: () => void;
 };
 
-export function LocationErrorBanner({
-  message,
-  onRetry,
-}: LocationErrorBannerProps) {
+export function LocationErrorBannerPresentational({ message, onRetry }: Props) {
   return (
     <div className="p-4 rounded-lg bg-warning/10 border border-warning/30 flex items-center gap-3">
       <MapPin className="w-5 h-5 text-warning" />

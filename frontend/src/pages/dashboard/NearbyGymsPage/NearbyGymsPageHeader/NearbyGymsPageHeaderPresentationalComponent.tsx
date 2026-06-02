@@ -1,26 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { List, Map as MapIcon } from "lucide-react";
 
-type ViewMode = "map" | "list";
-
-type NearbyGymsPageHeaderProps = {
-  viewMode: ViewMode;
-  onViewModeChange: (mode: ViewMode) => void;
+type Props = {
+  viewMode: "map" | "list";
+  onViewModeChange: (mode: "map" | "list") => void;
 };
 
-export function NearbyGymsPageHeader({
-  viewMode,
-  onViewModeChange,
-}: NearbyGymsPageHeaderProps) {
+export function NearbyGymsPageHeaderPresentational({ viewMode, onViewModeChange }: Props) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 className="font-display text-3xl font-bold mb-2">
-          Nearby Gyms
-        </h1>
-        <p className="text-muted-foreground">
-          Discover combat sports gyms near you
-        </p>
+        <h1 className="font-display text-3xl font-bold mb-2">Nearby Gyms</h1>
+        <p className="text-muted-foreground">Discover combat sports gyms near you</p>
       </div>
       <div className="flex items-center gap-2">
         <Button
