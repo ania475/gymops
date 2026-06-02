@@ -1,16 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 
-export function RetentionPageHeader() {
+export function RetentionPageHeaderPresentational() {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 className="font-display text-3xl font-bold mb-2">
-          Retention & KPIs
-        </h1>
+        <h1 className="font-display text-3xl font-bold mb-2">Retention & KPIs</h1>
         <p className="text-muted-foreground">
-          Track member retention, analyze churn, and monitor your academy's
-          health.
+          Track member retention, analyze churn, and monitor your academy's health.
         </p>
       </div>
       <Button variant="outline">

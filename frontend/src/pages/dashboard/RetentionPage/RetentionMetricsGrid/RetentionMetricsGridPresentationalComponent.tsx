@@ -7,26 +7,15 @@ import {
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { KPIRecord } from "@/types";
 
-type KPIRecord = {
-  retentionRate: number;
-  totalMembers: number;
-  newMembers: number;
-  churnedMembers: number;
-  revenue: number;
-};
-
-type RetentionMetricsGridProps = {
+type Props = {
   currentKPI: KPIRecord;
   previousKPI: KPIRecord;
 };
 
-export function RetentionMetricsGrid({
-  currentKPI,
-  previousKPI,
-}: RetentionMetricsGridProps) {
-  const retentionChange =
-    currentKPI.retentionRate - previousKPI.retentionRate;
+export function RetentionMetricsGridPresentational({ currentKPI, previousKPI }: Props) {
+  const retentionChange = currentKPI.retentionRate - previousKPI.retentionRate;
   const revenueChange =
     ((currentKPI.revenue - previousKPI.revenue) / previousKPI.revenue) * 100;
 
@@ -51,9 +40,7 @@ export function RetentionMetricsGrid({
             {Math.abs(retentionChange).toFixed(1)}%
           </div>
         </div>
-        <p className="text-3xl font-display font-bold mb-1">
-          {currentKPI.retentionRate}%
-        </p>
+        <p className="text-3xl font-display font-bold mb-1">{currentKPI.retentionRate}%</p>
         <p className="text-sm text-muted-foreground">Retention Rate</p>
       </div>
 
@@ -66,9 +53,7 @@ export function RetentionMetricsGrid({
             <ArrowUpRight className="w-4 h-4" />+{currentKPI.newMembers}
           </div>
         </div>
-        <p className="text-3xl font-display font-bold mb-1">
-          {currentKPI.totalMembers}
-        </p>
+        <p className="text-3xl font-display font-bold mb-1">{currentKPI.totalMembers}</p>
         <p className="text-sm text-muted-foreground">Total Members</p>
       </div>
 
@@ -78,13 +63,10 @@ export function RetentionMetricsGrid({
             <TrendingDown className="w-6 h-6 text-destructive" />
           </div>
           <div className="flex items-center gap-1 text-sm font-medium text-destructive">
-            <ArrowDownRight className="w-4 h-4" />-
-            {currentKPI.churnedMembers}
+            <ArrowDownRight className="w-4 h-4" />-{currentKPI.churnedMembers}
           </div>
         </div>
-        <p className="text-3xl font-display font-bold mb-1">
-          {currentKPI.churnedMembers}
-        </p>
+        <p className="text-3xl font-display font-bold mb-1">{currentKPI.churnedMembers}</p>
         <p className="text-sm text-muted-foreground">Churned This Month</p>
       </div>
 
