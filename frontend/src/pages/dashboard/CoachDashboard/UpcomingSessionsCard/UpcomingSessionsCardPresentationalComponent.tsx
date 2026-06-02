@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Session = {
+export type Session = {
   id: number;
   memberName: string;
   date: string;
@@ -11,13 +11,12 @@ type Session = {
   status: "confirmed" | "pending";
 };
 
-type UpcomingSessionsCardProps = {
+type Props = {
   sessions: Session[];
+  hasPending: boolean;
 };
 
-export function UpcomingSessionsCard({ sessions }: UpcomingSessionsCardProps) {
-  const hasPending = sessions.some((s) => s.status === "pending");
-
+export function UpcomingSessionsCardPresentational({ sessions, hasPending }: Props) {
   return (
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-6">
@@ -52,9 +51,7 @@ export function UpcomingSessionsCard({ sessions }: UpcomingSessionsCardProps) {
               </div>
               <div>
                 <p className="font-medium">{session.memberName}</p>
-                <p className="text-sm text-muted-foreground">
-                  {session.type}
-                </p>
+                <p className="text-sm text-muted-foreground">{session.type}</p>
               </div>
             </div>
             <div className="text-right">

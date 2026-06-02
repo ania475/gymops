@@ -2,17 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Video } from "lucide-react";
 import type { VideoContent } from "@/types";
 
-const MAX_VISIBLE = 3;
-
-type MyVideosCardProps = {
-  videos: VideoContent[];
+type Props = {
+  visible: VideoContent[];
+  overflow: number;
   onOpenUpload: () => void;
 };
 
-export function MyVideosCard({ videos, onOpenUpload }: MyVideosCardProps) {
-  const visible = videos.slice(0, MAX_VISIBLE);
-  const overflow = videos.length - MAX_VISIBLE;
-
+export function MyVideosCardPresentational({ visible, overflow, onOpenUpload }: Props) {
   return (
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-6">
